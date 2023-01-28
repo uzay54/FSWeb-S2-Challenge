@@ -75,12 +75,12 @@ function cumleKur(birinci, ikinci="", ucuncu="", dorduncu="", besinci=""){
 
 /* (Oto test yok) cumleKur fonksiyonuna yalnızca 1 parametre göndererek "Hello World!" stringini elde edin, sonucu konsolde gözlemleyin */
 
-
+console.log(cumleKur("Hello World!"))
 
 
 /* (Oto test yok) cumleKur fonksiyonuna yalnızca 2 parametre göndererek "Hello World!" stringini elde edin, sonucu konsolde gözlemleyin */
 
-
+console.log(cumleKur("Hello"," World!"))
 
 
 /* (Oto test var) cumleKur fonksiyonuna 5 parametre göndererek "Ben iyi bir yazılımcı olacağım!" stringini elde edin, sonucu `bircumle` değişkenine atayın ve konsolde gözlemleyin */
@@ -88,6 +88,8 @@ var bircumle;
 
 /* kodlar buraya */
 
+bircumle = cumleKur("Ben"," iyi"," bir"," yazılımcı"," olacağım!")
+console.log(bircumle)
 
 
 //		Sayfanın en üstünde global olarak tanımlanmış `cumleler` adında bir dizi bulunmaktadır. Bu dizinin içinde en çok 5 en az 1 adet string bulunan diziler bulunmaktadır. Aşağıdaki görevlerde aksi belirtilmedikçe bu dizi kullanılacaktır.
@@ -104,11 +106,15 @@ var bircumle;
 	*/
 	
 
-function cumlelereDonustur(/* kodlar buraya */ ){
-	/* kodlar buraya */
+function cumlelereDonustur(callbackCumleler, ayrac=","){ // BU DEFAULT DEĞER ayrac=",", eğer belirtilmezse virgül koyarım demek.
+
+	let copy = callbackCumleler.map((sozcuk) => {
+		return sozcuk.join(ayrac);
+	});
+	return copy;
 }
 
-
+console.log(cumlelereDonustur(cumleler," "))
 
 /* GÖREV 2:
 		paragrafOlustur fonksiyonuna aşağıdakileri uygulayın.
@@ -116,14 +122,22 @@ function cumlelereDonustur(/* kodlar buraya */ ){
 			2. cumleKur fonksiyonu geriçağırım(callback) için fonksiyonun ikinci parametresi olarak alınacak
 			3. cumlelereDonustur fonksiyonu geriçağırım(callback) için fonksiyonun üçüncü parametresi olarak alınacak
 			4. Bir dizi oluşturulacak ve cumlelereDonustur fonksiyonu cumleler ve " " ayracıyla çağırılarak bu diziye aktarılacak
-			5. Oluşturulan bu dizinin tek sayılı anahtarlarını(index) [1,3,5,7,9] kullanarak ilk 5 elemanı geriçağırım olarak çağırılan cumleKur dizisinin parametreleri olarak aktarılarak çağırılacak ÖRNEK: callback(dizi[1],dizi[2],dizi[3],dizi[5],dizi[7])
+			5. Oluşturulan bu dizinin tek sayılı anahtarlarını(index) [1,3,5,7,9] kullanarak ilk 5 elemanı geriçağırım olarak çağırılan cumleKur dizisinin parametreleri olarak aktarılarak çağırılacak ÖRNEK: callback(dizi[1],dizi[3],dizi[5],dizi[7],dizi[9])
 			6. Oluşturulan paragraf döndürülecek
 	*/
 	
-function paragrafOlustur(/* kodlar buraya */ ){
-	/* kodlar buraya */ 
+function paragrafOlustur(array,callbackCumleKur,callbackCumlelereDonustur){
+	let Arr = callbackCumlelereDonustur(array," ");
+	
+	return callbackCumleKur(Arr[1],Arr[3],Arr[5],Arr[7],Arr[9]);
+		
+	// let Arr = []; ==> Undefined?
+	// Arr.push(callbackCumlelereDonustur(array," "));
+	
+	// return callbackCumleKur(Arr[1],Arr[3],Arr[5],Arr[7],Arr[9]);
 }
 
+console.log(paragrafOlustur(cumleler,cumleKur,cumlelereDonustur));
 
 /* 	GÖREV 3:
 		Yukarıda isimleri sebzeler ve meyveler olan 2 dizi bulunmaktadır. Bu dizileri kullanarak aşağıdaki görevleri tamamlayın.
@@ -133,7 +147,9 @@ function paragrafOlustur(/* kodlar buraya */ ){
 /* kodlar buraya */
 
 
-
+meyveler.shift();
+meyveler.pop()
+console.log(meyveler);
 
 
  
@@ -142,8 +158,9 @@ function paragrafOlustur(/* kodlar buraya */ ){
 //3b çözümü
 /* kodlar buraya */
 
-
-
+sebzeler.unshift("🐇")
+sebzeler.push("🦔")
+console.log(sebzeler);
 
 
 
@@ -154,7 +171,8 @@ function paragrafOlustur(/* kodlar buraya */ ){
 	//3c çözümü
 /* kodlar buraya */
 
-var manav;
+var manav=meyveler.concat(sebzeler);
+console.log(manav);
 
 
 
@@ -170,12 +188,29 @@ var manav;
 			4. elde edilen string döndürülecek
  */
 
-function emojileriDonustur(/* kodlar buraya */){
-/* kodlar buraya */
+	// str.replace(":)", "🙂")
+	//str.replace(":)", emojiler[":)"])
 
+
+	var emojiler = { 
+		":)": "🙂",
+		":(": "😔",
+		":d": "😁",
+		":p": "😛",
+		":o": "😱",
+		"<3": "❤️",
+		}
+
+function emojileriDonustur(mesaj,emoji){
+	for(let x in emoji) {
+		//x.toLowerCase() => :) 1.propeprty ; emoji[x] : 🙂
+		mesaj = mesaj.replaceAll(x.toUpperCase(), emoji[x]);
+		mesaj = mesaj.replaceAll(x.toLowerCase(), emoji[x]);
+	}
+	return mesaj;
 }
 
-
+console.log(emojileriDonustur("Merhaba :)", emojiler));
 
 /*  Bu satırın aşağısındaki kodları lütfen değiştirmeyin  */
 function sa(){
@@ -196,4 +231,3 @@ module.exports = {
 	emojiler,
 	emojileriDonustur
 }
-
